@@ -1,5 +1,5 @@
-from data_manager_interface import DataManagerInterface
-from file_handler import load_from_file, save_file
+from .data_manager_interface import DataManagerInterface
+from .file_handler import load_from_file, save_file
 
 
 class JSONDataManager(DataManagerInterface):
