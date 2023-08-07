@@ -1,0 +1,27 @@
+[
+  {
+    "id": "deadee",
+    "name": "Tunmise",
+    "password": "$2b$12$Eoo6vBqAn.joRMSkiM4VOOz60wA2hUZ/8fROgczZ87vk.5DOKWalG",
+    "movies": [
+      {
+        "id": "ec5c3b2b-4ff7-4f99-abc4-132597767e3c",
+        "title": "The Little Mermaid",
+        "director": "Ron Clements, John Musker",
+        "year": 1989,
+        "rating": 7.6,
+        "poster": "https://m.media-amazon.com/images/M/MV5BOWUyNDA0ZmItMzg2My00YjJhLTk1N2QtYTAxYTc0NzMzNDI0XkEyXkFqcGdeQXVyMTI5NzUyMTIz._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0097757/"
+      },
+      {
+        "id": "ba43be60-961c-484a-8b69-a1ba27e95ae4",
+        "title": "The Lion King",
+        "director": "Roger Allers, Rob Minkoff",
+        "year": 1994,
+        "rating": 8.5,
+        "poster": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0110357/"
+      }
+    ]
+  }
+]
