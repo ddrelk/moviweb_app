@@ -1,0 +1,93 @@
+@font-face {
+  font-family: 'Custom';
+  src: url('Orbit-Regular.ttf') format('truetype');
+}
+body {
+  background: #DD1155;
+  color: #c2c2d6;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Style the movie list */
+.movie-list {
+    background-color: #DD1155; /* Light gray background */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+.movie-grid {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie-grid li {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+ol {
+    list-style: none; /* Remove default list bullet points */
+    padding: 0; /* Remove default list padding */
+}
+
+.movie-item:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
+}
+
+.movie-poster {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    width: 135px;
+    height: 193px;
+}
+
+/* Style the movie poster */
+.movie-poster img {
+    display: block;
+    width: 100%;
+    height: 100%; /* Adjusted height for the poster image */
+    object-fit: contain;
+}
+
+.movie-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+/* Style movie title */
+.movie-title {
+    margin: 0;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+/* Style movie details */
+.movie-details {
+    background: #880044;
+    color: #00CC99;
+    padding: 10px; /* Add padding for details */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 135px; /* Set fixed width to match poster width */
+    height: 45px; /* Set the desired height */
+    box-sizing: border-box; /* Include padding in max-width calculation */
+}
+
+/* Style movie info */
+.movie-rating {
+    margin: 0;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: bold;
+}
+
+

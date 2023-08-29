@@ -1,0 +1,69 @@
+@font-face {
+  font-family: 'Custom';
+  src: url('Orbit-Regular.ttf') format('truetype');
+}
+body {
+  background: #DD1155;
+  color: #c2c2d6;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.title {
+  font-family: "MyCustomFont", "Custom", sans-serif;
+  padding: 5px 0; /* Add padding for spacing */
+  background: #880044; /* Darker background color */
+  color: #00CC99; /* Mint color */
+  text-align: center;
+  font-size: 25pt; /* Slightly larger font size */
+  border-radius: 7px;
+  margin-bottom: 10px; /* Increased margin */
+}
+
+.add-user-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 600px;
+  margin: 0 auto;
+
+}
+
+.enter-user-box {
+  background-color: #880044;
+  padding: 30px;
+  border-radius: 7px;
+}
+
+.enter-user-box label {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 5px;
+  display: inline-block;
+  width: 200px;
+}
+
+.enter-user-box input[type="text"], .enter-user-box input[type="password"], .enter-user-box input[type="email"] {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.enter-user-box button[type="submit"] {
+  background-color: #880044;
+  opacity: 0.85;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 30px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.enter-user-box button[type="submit"]:hover {
+  background-color: #AA1155;
+}

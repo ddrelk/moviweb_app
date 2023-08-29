@@ -1,0 +1,36 @@
+.title {
+    font-size: 20pt;
+}
+
+.movie-details-box {
+    margin-left: 5px;
+    float: left;
+    width: 28%;
+    display: inline-block; /* Change to inline-block */
+    vertical-align: top; /* Align the boxes vertically */
+    box-sizing: border-box; /* Include padding and border in width */
+    padding: 0px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.movie-details {
+    width: 100%; /* Make the image take up the full width of its container */
+    display: block;
+    margin-left: 12px;
+}
+
+.second_title {
+    width: 93%;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.movie_info {
+    width: 94%;
+    background-color: #9db4c0;
+    color: #1f1f2e;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+}

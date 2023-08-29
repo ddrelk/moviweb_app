@@ -1,0 +1,87 @@
+/* Define the custom font */
+@font-face {
+  font-family: 'Custom';
+  src: url('Orbit-Regular.ttf') format('truetype');
+}
+
+/* Apply styles to the body */
+body {
+  background: #DD1155; /* Dark background color */
+  color: #ffffff; /* White text color */
+  font-family: "Lucida Console", "Courier New", monospace;
+  position: relative;
+  margin: 0; /* Reset default margin */
+  padding: 0; /* Reset default padding */
+}
+
+/* Style the title */
+.title {
+  font-family: "Custom";
+  padding: 10px 0; /* Add padding for spacing */
+  background: #880044; /* Darker background color */
+  color: #00CC99; /* Mint color */
+  text-align: center;
+  font-size: 28pt; /* Slightly larger font size */
+  border-radius: 7px;
+  margin-bottom: 15px; /* Increased margin */
+}
+
+/* Style buttons container */
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px; /* Increased top margin */
+}
+
+/* Style buttons */
+.buttons-container button {
+  background-color: #292929;
+  opacity: 0.9; /* Slightly increased opacity */
+  color: #00CC99;
+  padding: 12px 25px; /* Slightly larger padding */
+  border: 1px solid #474747; /* Add a subtle border */
+  border-radius: 5px;
+  font-size: 28px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  margin-right: 25px; /* Increased spacing */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+/* Improve button hover effect */
+.button-container button:hover {
+  background-color: #DD1155; /* Darker background on hover */
+}
+
+/* Style bottom-right button */
+.bottom-right-button {
+  background-color: #880044;
+  color: #00CC99;
+  padding: 8px 15px; /* Smaller padding */
+  border: none;
+  border-radius: 5px;
+  font-size: 12px; /* Smaller font size */
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 15px;
+}
+
+/* Style the bottom-right button container */
+.button-container {
+  position: fixed;
+  bottom: 20px; /* Increased distance from the bottom */
+  right: 20px; /* Increased distance from the right */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  z-index: 999;
+}
+
+/* Style paragraph text */
+p {
+  text-align: center;
+  font-size: 16px; /* Slightly smaller font size */
+  margin: 20px 0; /* Add vertical margin */
+}
