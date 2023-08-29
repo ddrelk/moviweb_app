@@ -8,8 +8,7 @@
         "id": "ec5c3b2b-4ff7-4f99-abc4-132597767e3c",
         "title": "The Little Mermaid",
         "director": "Ron Clements, John Musker",
-        "year": 1989,
-        "rating": 7.6,
+        "year": 1989, "rating": 7.6,
         "poster": "https://m.media-amazon.com/images/M/MV5BOWUyNDA0ZmItMzg2My00YjJhLTk1N2QtYTAxYTc0NzMzNDI0XkEyXkFqcGdeQXVyMTI5NzUyMTIz._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt0097757/"
       },
@@ -21,6 +20,103 @@
         "rating": 8.5,
         "poster": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt0110357/"
+      },
+      {
+        "id": "1a16bf7c-1745-47be-9257-da78469e8062",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino",
+        "year": 1994,
+        "rating": 8.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0110912/"
+      },
+      {
+        "id": "b840d1d3-8d4f-4194-b1c5-1956e0fe3b93",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino",
+        "year": 1994,
+        "rating": 8.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0110912/"
+      },
+      {
+        "id": "4684440f-be6d-4052-b35e-1030d7533a70",
+        "title": "Titanic",
+        "director": "James Cameron",
+        "year": 1997,
+        "rating": 7.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0120338/"
+      },
+      {
+        "id": "a1edb815-21b3-4548-a2ec-d4ff3ee653ad",
+        "title": "Aquaman",
+        "director": "James Wan",
+        "year": 2018,
+        "rating": 6.8,
+        "poster": "https://m.media-amazon.com/images/M/MV5BOTk5ODg0OTU5M15BMl5BanBnXkFtZTgwMDQ3MDY3NjM@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt1477834/"
+      },
+      {
+        "id": "ef780705-c399-4585-a652-ba58013ffcd0",
+        "title": "Smile",
+        "director": "Parker Finn",
+        "year": 2022,
+        "rating": 6.5,
+        "poster": "https://m.media-amazon.com/images/M/MV5BZjE2ZWIwMWEtNGFlMy00ZjYzLWEzOWEtYzQ0MDAwZDRhYzNjXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt15474916/"
+      },
+      {
+        "id": "ed2e00b1-e749-4a4b-a951-88b65140805a",
+        "title": "Fall",
+        "director": "Scott Mann",
+        "year": 2022,
+        "rating": 6.4,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGI3MWYwYjItNzZhYi00ZWIzLTkyMzYtN2JmNjg3ODg1NTg4XkEyXkFqcGdeQXVyMTMwMDA5ODU3._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt15325794/"
+      },
+      {
+        "id": "b8113a88-43eb-4c87-8398-3e83a7a91775",
+        "title": "Plane",
+        "director": "Jean-Fran\u00e7ois Richet",
+        "year": 2023,
+        "rating": 6.5,
+        "poster": "https://m.media-amazon.com/images/M/MV5BZDc4MzVkNzYtZTRiZC00ODYwLWJjZmMtMDIyNjQ1M2M1OGM2XkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt5884796/"
+      }
+    ]
+  },
+  {
+    "id": "6ccc796a-153f-48cc-931f-bf716cf2f959",
+    "name": "tester3",
+    "password": "password",
+    "movies": [
+      {
+        "id": "6f102890-0a22-41d1-a44e-954dec276f1b",
+        "title": "Titanic",
+        "director": "James Cameron",
+        "year": 1997,
+        "rating": 7.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0120338/"
+      },
+      {
+        "id": "eb808d5d-55b3-404d-a1ed-5fac4bf5bca7",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino",
+        "year": 1994,
+        "rating": 8.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0110912/"
+      },
+      {
+        "id": "70adafb6-3751-4fe6-ba52-3abc09694e91",
+        "title": "Salt",
+        "director": "Phillip Noyce",
+        "year": 2010,
+        "rating": 6.4,
+        "poster": "https://m.media-amazon.com/images/M/MV5BMjIyODA2NDg4NV5BMl5BanBnXkFtZTcwMjg4NDAwMw@@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0944835/"
       }
     ]
   }
