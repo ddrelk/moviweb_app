@@ -8,7 +8,8 @@
         "id": "ec5c3b2b-4ff7-4f99-abc4-132597767e3c",
         "title": "The Little Mermaid",
         "director": "Ron Clements, John Musker",
-        "year": 1989, "rating": 7.6,
+        "year": 1989,
+        "rating": 7.6,
         "poster": "https://m.media-amazon.com/images/M/MV5BOWUyNDA0ZmItMzg2My00YjJhLTk1N2QtYTAxYTc0NzMzNDI0XkEyXkFqcGdeQXVyMTI5NzUyMTIz._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt0097757/"
       },
@@ -16,28 +17,10 @@
         "id": "ba43be60-961c-484a-8b69-a1ba27e95ae4",
         "title": "The Lion King",
         "director": "Roger Allers, Rob Minkoff",
-        "year": 1994,
-        "rating": 8.5,
+        "year": "1994",
+        "rating": "8.5",
         "poster": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt0110357/"
-      },
-      {
-        "id": "1a16bf7c-1745-47be-9257-da78469e8062",
-        "title": "Pulp Fiction",
-        "director": "Quentin Tarantino",
-        "year": 1994,
-        "rating": 8.9,
-        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-        "movie_link": "https://www.imdb.com/title/tt0110912/"
-      },
-      {
-        "id": "b840d1d3-8d4f-4194-b1c5-1956e0fe3b93",
-        "title": "Pulp Fiction",
-        "director": "Quentin Tarantino",
-        "year": 1994,
-        "rating": 8.9,
-        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-        "movie_link": "https://www.imdb.com/title/tt0110912/"
       },
       {
         "id": "4684440f-be6d-4052-b35e-1030d7533a70",
@@ -83,6 +66,15 @@
         "rating": 6.5,
         "poster": "https://m.media-amazon.com/images/M/MV5BZDc4MzVkNzYtZTRiZC00ODYwLWJjZmMtMDIyNjQ1M2M1OGM2XkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt5884796/"
+      },
+      {
+        "id": "4013d930-2573-4b03-851e-c432e31b4be3",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino",
+        "year": 1994,
+        "rating": 8.9,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt0110912/"
       }
     ]
   },
@@ -117,6 +109,22 @@
         "rating": 6.4,
         "poster": "https://m.media-amazon.com/images/M/MV5BMjIyODA2NDg4NV5BMl5BanBnXkFtZTcwMjg4NDAwMw@@._V1_SX300.jpg",
         "movie_link": "https://www.imdb.com/title/tt0944835/"
+      }
+    ]
+  },
+  {
+    "id": "96dadca0-223c-4157-83f0-d3a1a09a0a0b",
+    "name": "tullish",
+    "password": "password",
+    "movies": [
+      {
+        "id": "6601fe22-23d6-4e73-ae78-e0b4cbc39bca",
+        "title": "Plane",
+        "director": "Jean-Fran\u00e7ois Richet",
+        "year": 2023,
+        "rating": 6.5,
+        "poster": "https://m.media-amazon.com/images/M/MV5BZDc4MzVkNzYtZTRiZC00ODYwLWJjZmMtMDIyNjQ1M2M1OGM2XkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_SX300.jpg",
+        "movie_link": "https://www.imdb.com/title/tt5884796/"
       }
     ]
   }
