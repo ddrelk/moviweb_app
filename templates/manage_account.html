@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+</head>
+<body>
+<div class="title">
+    <h1>Manage Account</h1>
+</div>
+<div class="buttons-container">
+    <form action="{{ url_for('delete_user', user_id=user_id) }}" method="GET">
+        <button type="submit">Delete Account</button>
+    </form>
+
+    <a href="{{ url_for('logout') }}">
+        <button>Logout</button>
+    </a>
+
+    <a href="{{ url_for('list_user_movies', user_id=user_id) }}">
+        <button>Back to my Movies</button>
+    </a>
+</div>
+</body>
+</html>

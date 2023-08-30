@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Movie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <link rel="stylesheet" href="/static/update_movie_style.css">
+</head>
+<body>
+<div class="title">
+     <h1>Update Movie: {{ movie['title'] }}</h1>
+</div>
+
+<div class="update-movie">
+    <form method="POST">
+        <div class="update-parameter">
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" value="{{ movie['year'] }}" required><br>
+        </div>
+
+        <div class="update-parameter">
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" value="{{ movie['director'] }}" required><br>
+        </div>
+
+        <div class="update-parameter">
+            <label for="rating">Rating:</label>
+            <input type="text" id="rating" name="rating" value="{{ movie['rating'] }}" required><br>
+        </div>
+
+        <div class="update-parameter">
+            <label for="poster">Poster:</label>
+            <input type="text" id="poster" name="poster" value="{{ movie['poster'] }}" required><br>
+        </div>
+
+        <div class="update-parameter">
+            <label for="imdb_link">Imdb link:</label>
+            <input type="text" id="imdb_link" name="imdb_link" value="{{ movie['movie_link'] }}" required><br>
+        </div>
+
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+<div class="button-container">
+    <a href="{{ url_for('list_user_movies', user_id=user_id) }}">
+        <button class="bottom-right-button">Back to my Movies</button>
+    </a>
+
+    <a href="{{ url_for('home') }}">
+        <button class="bottom-right-button">Back to Homepage</button>
+    </a>
+
+    <a href="{{ url_for('list_users') }}">
+        <button class="bottom-right-button">Back to all users</button>
+    </a>
+</div>
+</body>
+</html>

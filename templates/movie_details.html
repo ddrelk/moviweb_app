@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='movie_details_style.css') }}">
+</head>
+<body>
+
+<div class="title">
+    <h1>{{ movie['title'] }} </h1>
+</div>
+
+<!-- MOVIE INFO -->
+<div class="movie-details-box">
+    <div class="movie-details">
+        <h2 class ="second_title" id="details"> Movie Details </h2>
+        <img src="{{ movie['poster'] }}" alt="Movie Poster"/>
+        <div class="movie_info">
+            <div class ="movie_detail">Released: {{ movie['year'] }}</div>
+            <div class ="movie_detail">Rating: {{ movie['rating'] }} </div>
+            <div class ="movie_detail"> Director: {{ movie['director'] }}</div>
+            <div class = "movie_detail">Movie Link: {{ movie['movie_link'] }}</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="button-container">
+    <a href="{{ url_for('list_user_movies', user_id=user_id) }}">
+        <button class="bottom-right-button">Back to my Movies</button>
+    </a>
+
+    <a href="{{ url_for('home') }}">
+        <button class="bottom-right-button">Back to Homepage</button>
+    </a>
+
+    <a href="{{ url_for('list_users') }}">
+        <button class="bottom-right-button">Back to all users</button>
+    </a>
+</div>
+
+</body>
+</html>

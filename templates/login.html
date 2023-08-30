@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_user_style.css') }}">
+</head>
+<body>
+
+<div class="title">
+    <h1>Login</h1>
+</div>
+
+<div class="add-user-box">
+    <div class="enter-user-box">
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" value="{% if request.args.get('username') %}{{ request.args.get('username') }}{% endif %}" required><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required><button type="submit">Login</button>  <br>
+        </form>
+    </div>
+</div>
+<div>
+<div class="button-container">
+    <a href="{{ url_for('home') }}">
+        <button class="bottom-right-button">Back to Homepage</button>
+    </a>
+
+    <a href="{{ url_for('add_user') }}">
+        <button class="bottom-right-button">New User</button>
+    </a>
+</div>
+    <footer>
+        <p>&copy; 2023 Dare Salisu. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>
