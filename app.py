@@ -1,10 +1,14 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 from moviweb_app.data_manager.json_storage_manager import JSONDataManager
 from api_extractor import get_imdb_link, data_extractor
-from id_generator import id_generator
+from moviweb_app.id_password_handler import generate_password_hash, id_generator
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from moviweb_app.login_handler import User
 
 app = Flask(__name__)
 data_manager = JSONDataManager("data/movies.json")
+app.secret_key = '0ac93239bf1b653ee7a5392e84e3b703'
+login_manager = LoginManager(app)
 
 
 @app.route('/')
@@ -15,6 +19,19 @@ def home():
 @app.route('/movie')
 def movie_details():
     return render_template('movie_details.html')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    # Implement logic to load a user from your data source
+    # For example, if users_data is a list of user dictionaries
+    user_data = data_manager.get_user_data()
+    user = next((user for user in user_data if user['id'] == user_id), None)
+
+    if user:
+        return User(user)
+    else:
+        return None
 
 
 @app.route('/users')
@@ -36,6 +53,7 @@ def list_users():
 
 
 @app.route('/users/<user_id>')
+@login_required
 def list_user_movies(user_id):
     try:
         user_name = data_manager.get_user_name(user_id)
@@ -61,9 +79,13 @@ def add_user():
         email = request.form.get('email')
         user_password = request.form.get('password')
         user_id = id_generator()
+
         try:
-            if data_manager.add_user(user_name, user_password, user_id, []):
-                return redirect(url_for('list_user_movies', username=user_name, user_id=user_id))
+            hashed_password = generate_password_hash(user_password)
+            if data_manager.add_user(user_name, hashed_password, user_id, []):
+                session['user_id'] = user_id
+                session['username'] = user_name
+                return redirect(url_for('login', username=user_name))
 
         except ValueError as e:
             return render_template('add_user.html', error_message=str(e))
@@ -189,6 +211,74 @@ def delete_movie(user_id, movie_id):
 
     error_message = "Sorry, this page does not support GET requests"
     return render_template('error.html', error_message=error_message)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        try:
+            user = data_manager.verify_user(username, password)
+            if user:
+                user_id = user['id']
+                user_obj = load_user(user_id)  # Create a User object
+                login_user(user_obj)  # Log the user in
+                return redirect(url_for('list_user_movies', user_id=user_id))
+            else:
+                error_message = "Invalid credentials. Please try again."
+                return render_template('login.html', error_message=error_message)
+        except IOError as e:
+            error_message = "An error occurred while logging in."
+            print(f"IOError: {str(e)}")
+            return render_template('error.html', error_message=error_message)
+        except RuntimeError as e:
+            error_message = "An unexpected error occurred."
+            print(f"Error: {str(e)}")
+            return render_template('error.html', error_message=error_message)
+
+    return render_template('login.html')
+
+
+@app.route('/users/<user_id>/manage_account', methods=['GET'])
+@login_required
+def manage_account(user_id):
+    """Renders the manage account page for a specific user."""
+    return render_template('manage_account.html', user_id=user_id)
+
+
+@app.route('/users/<user_id>/delete', methods=['GET', 'POST'])
+@login_required
+def delete_user(user_id):
+    """Deletes a user and all its associated movies """
+    if request.method == 'POST':
+        user_password = request.form.get('password')
+        user_password_2 = request.form.get('confirm_password')
+
+        if user_password == user_password_2:
+            try:
+                current_user_id = current_user.id
+                if current_user_id == user_id:
+                    session.clear()
+                    return redirect(url_for('login'))
+                else:
+                    error_message = "You are not authorized to delete this user."
+                    return render_template('error.html', error_message=error_message)
+            except ValueError as e:
+                error_message = str(e)
+                return render_template('error.html', error_message=error_message)
+            except RuntimeError as e:
+                error_message = str(e)
+                return render_template('error.html', error_message=error_message)
+    return render_template('delete_user.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()
+    return redirect(url_for('login'))
 
 
 @app.errorhandler(404)
