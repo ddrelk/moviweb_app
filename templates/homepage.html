@@ -10,7 +10,7 @@
 <div class="title">
     <h1>Welcome to Moviepedia</h1>
 </div>
-
+|
 <div class="buttons-container">
     <a href="{{ url_for('add_user') }}">
         <button>Sign up</button>
@@ -19,7 +19,9 @@
     <a href="{{ url_for('list_users') }}">
         <button>All Users</button>
     </a>
-
+    <a href="{{ url_for('login') }}">
+        <button>Login</button>
+    </a>
 </div>
 </body>
 </html>

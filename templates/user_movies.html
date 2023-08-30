@@ -38,8 +38,11 @@
         <a href="{{ url_for('add_movie', user_id=user_id) }}">
             <button>Add Movie</button>
         </a>
-        <a href="{{ url_for('home') }}">
-            <button>Back to Homepage</button>
+        <a href="{{ url_for('manage_account', user_id=user_id) }}">
+            <button>Manage Account</button>
+        </a>
+        <a href="{{ url_for('logout') }}">
+            <button>Logout</button>
         </a>
     </div>
     <footer>
