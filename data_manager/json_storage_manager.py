@@ -1,5 +1,6 @@
 from .data_manager_interface import DataManagerInterface
 from .file_handler import load_from_file, save_file
+from moviweb_app.id_generator import check_password_hash
 
 
 class JSONDataManager(DataManagerInterface):
@@ -151,3 +152,11 @@ class JSONDataManager(DataManagerInterface):
             user['password'] = new_password
         except StopIteration:
             raise TypeError(f"Error finding the user with id {user_id}")
+
+    def verify_user(self, username, password):
+        user = next((user for user in self.data if user["name"] == username), None)
+
+        if user and check_password_hash(user["password"], password):
+            return user
+        else:
+            return None
