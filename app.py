@@ -16,11 +16,6 @@ def home():
     return render_template('homepage.html')
 
 
-@app.route('/movie')
-def movie_details():
-    return render_template('movie_details.html')
-
-
 @login_manager.user_loader
 def load_user(user_id):
     # Implement logic to load a user from your data source
