@@ -36,7 +36,7 @@ body {
 
 /* Style buttons */
 .buttons-container button {
-  background-color: #292929;
+  background-color: #880044;
   opacity: 0.9; /* Slightly increased opacity */
   color: #00CC99;
   padding: 12px 25px; /* Slightly larger padding */
@@ -51,6 +51,11 @@ body {
 
 /* Improve button hover effect */
 .button-container button:hover {
+  background-color: #DD1155; /* Darker background on hover */
+}
+
+/* Improve button hover effect */
+.buttons-container button:hover {
   background-color: #DD1155; /* Darker background on hover */
 }
 
@@ -84,4 +89,10 @@ p {
   text-align: center;
   font-size: 16px; /* Slightly smaller font size */
   margin: 20px 0; /* Add vertical margin */
+}
+
+/* Style for the image */
+.image {
+    width: 1280px;   /* Adjust width as needed */
+    height: 200px;  /* Adjust height as needed */
 }
