@@ -15,8 +15,12 @@
         <ul>
             {% for user in users %}
             <li>
+                {% if current_user.is_authenticated and user['id'] == current_user.id %}
                 <a href="{{ url_for('list_user_movies', user_id=user['id']) }}">
                     <span class="user-name">{{ user['name'] }}</span></a>
+                {% else %}
+                <a href="{{ url_for('login', username=user['name']) }}">{{ user['name'] }}</a>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
