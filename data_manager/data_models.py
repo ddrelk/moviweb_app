@@ -32,3 +32,14 @@ class Movie(db.Model):
 
     def __str__(self):
         return f'movie_id={self.movie_id}, title={self.title}'
+
+
+class Review(db.Model):
+    review_id = db.Column(db.String(200), primary_key=True)
+    user_id = db.Column(db.String, db.ForeignKey('user.id'))
+    movie_id = db.Column(db.String, db.ForeignKey('movie.id'))
+    rating = db.Column(db.Integer, db.ForeignKey('movie.rating'))
+    likes = db.Column(db.Integer)
+    publication_date = db.Column(db.String)
+    review_text = db.Column(db.String(500))
+    review_title = db.Column(db.String(100))
