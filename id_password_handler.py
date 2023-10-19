@@ -1,5 +1,6 @@
 import uuid
 import bcrypt
+import datetime
 
 
 def id_generator():
@@ -14,3 +15,9 @@ def generate_password_hash(plain_password):
 
 def check_password_hash(hashed_password, plain_password):
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+
+
+def save_date():
+    current_datetime = datetime.datetime.now()
+    formatted_date = current_datetime.strftime("%d-%m-%Y")
+    return formatted_date
