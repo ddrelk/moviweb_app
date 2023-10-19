@@ -1,14 +1,22 @@
-from flask import Flask, render_template, request, url_for, redirect, session
-from moviweb_app.data_manager.json_storage_manager import JSONDataManager
 from api_extractor import get_imdb_link, data_extractor
-from moviweb_app.id_password_handler import generate_password_hash, id_generator
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from data_manager.sqlite_manager import SQLiteDataManager
+from flask_login import LoginManager, login_user, logout_user, login_required
+from flask import Flask, render_template, request, url_for, redirect, session, flash
 from moviweb_app.login_handler import User
+from moviweb_app.id_password_handler import generate_password_hash, id_generator, save_date
+from moviweb_app.id_password_handler import check_password_hash
+import os
+
 
 app = Flask(__name__)
-data_manager = JSONDataManager("data/movies.json")
+db_dir = os.path.join(app.root_path, 'data')
+os.makedirs(db_dir, exist_ok=True)
+db_file_path = os.path.join(db_dir, 'movies.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file_path}'
+data_manager = SQLiteDataManager(app)
 app.secret_key = '0ac93239bf1b653ee7a5392e84e3b703'
 login_manager = LoginManager(app)
+# db.init_app(app)
 
 
 @app.route('/')
@@ -18,11 +26,8 @@ def home():
 
 @login_manager.user_loader
 def load_user(user_id):
-    # Implement logic to load a user from your data source
-    # For example, if users_data is a list of user dictionaries
     user_data = data_manager.get_user_data()
     user = next((user for user in user_data if user['id'] == user_id), None)
-
     if user:
         return User(user)
     else:
@@ -77,9 +82,10 @@ def add_user():
 
         try:
             hashed_password = generate_password_hash(user_password)
-            if data_manager.add_user(user_name, hashed_password, user_id, []):
+            if data_manager.add_user(user_name, hashed_password, user_id, email):
                 session['user_id'] = user_id
                 session['username'] = user_name
+                session['email'] = email
                 return redirect(url_for('login', username=user_name))
 
         except ValueError as e:
@@ -148,17 +154,17 @@ def update_movie(user_id, movie_id):
     user_movie_list = data_manager.get_user_movies(user_id)
     movie_to_update = None
     for movie in user_movie_list:
-        if movie['id'] == movie_id:
+        if movie.movie_id == movie_id:
             movie_to_update = movie
             break
 
     if movie_to_update is None:
         # Handle possible errors with the movie id
         error_message = "Sorry, we could not find that movie!"
-        return render_template('general_error.html', error_message=error_message)
+        return render_template('error.html', error_message=error_message)
 
     if request.method == 'POST':
-        title = movie_to_update['title']
+        title = movie_to_update.title
         updated_director = request.form['director']
         updated_year = request.form['year']
         updated_rating = request.form['rating']
@@ -214,12 +220,13 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         try:
-            user = data_manager.verify_user(username, password)
-            if user:
-                user_id = user['id']
-                user_obj = load_user(user_id)  # Create a User object
-                login_user(user_obj)  # Log the user in
-                return redirect(url_for('list_user_movies', user_id=user_id))
+            user_data = data_manager.get_user_data()
+            for user in user_data:
+                if user['name'] == username and check_password_hash(user['password'], password):
+                    user_id = user['id']
+                    user_obj = load_user(user_id)  # Create a User object
+                    login_user(user_obj)  # Log the user in
+                    return redirect(url_for('list_user_movies', user_id=user_id))
             else:
                 error_message = "Invalid credentials. Please try again."
                 return render_template('login.html', error_message=error_message)
@@ -252,10 +259,11 @@ def delete_user(user_id):
 
         if user_password == user_password_2:
             try:
-                current_user_id = current_user.id
-                if current_user_id == user_id:
-                    session.clear()
-                    return redirect(url_for('login'))
+                user_data = data_manager.get_user_data()
+                for user in user_data:
+                    if check_password_hash(user['password'], user_password):
+                        data_manager.delete_user(user_id)
+                        return redirect(url_for('login'))
                 else:
                     error_message = "You are not authorized to delete this user."
                     return render_template('error.html', error_message=error_message)
@@ -278,8 +286,102 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    users = data_manager.get_user_data()
+    for user in users:
+        user_id = user['id']
+        return render_template('404.html', user_id=user_id), 404
+
+
+@app.route('/movie_details/<movie_id>')
+def movie_details(movie_id):
+    """Displays the details of a movie along with their reviews and their authors
+    and the buttons to add a review, delete and edit"""
+    try:
+        movie = data_manager.get_movie_details(movie_id)
+        reviews = data_manager.get_all_movie_reviews(movie_id)
+        return render_template('movie_details.html', reviews=reviews, movie=movie)
+    except ValueError as e:
+        error_message = str(e)
+        return render_template('general_error.html', error_message=error_message)
+
+    except RuntimeError as e:
+        error_message = "Error retrieving data from database"
+        print(f"Error: {str(e)}")
+        return render_template('general_error.html', error_message=error_message)
+
+
+@app.route('/add_review/<user_id>/<movie_id>', methods=['GET', 'POST'])
+@login_required
+def add_review(user_id, movie_id):
+    """Loads the add review template and allows the user to publish a review"""
+    try:
+        if request.method == 'POST':
+            review_id = id_generator()
+            publication_date = save_date()
+            review_rating = request.form.get('rating')
+            review_title = request.form.get('review_title')
+            review_text = request.form.get('review_text')
+            try:
+                data_manager.add_reviews(review_id, user_id, movie_id, review_rating, 0, publication_date,
+                                         review_text, review_title)
+                return redirect(url_for('movie_details', movie_id=movie_id))
+            except ValueError as e:
+                flash(str(e), 'error')
+                return redirect(url_for('movie_details', movie_id=movie_id))
+
+        return render_template('add_review.html', movie_id=movie_id, user_id=user_id)
+
+    except RuntimeError as e:
+        error_message = "Error communicating with  database"
+        print(f"Error: {str(e)}")
+        return render_template('general_error.html', error_message=error_message)
+
+
+@app.route('/edit_review/<user_id>/<movie_id>/<review_id>', methods=['GET', 'POST'])
+@login_required
+def edit_review(user_id, movie_id, review_id):
+    """Loads the edit review template and allows the user to edit
+    an already submitted review if published by the user"""
+    try:
+        review = data_manager.get_review_info(review_id)
+        if request.method == 'POST':
+            review_title = request.form['title']
+            review_text = request.form['text']
+            rating = request.form['rating']
+            data_manager.edit_reviews(review_id, user_id, movie_id, rating, review_text, review_title)
+            return redirect(url_for('movie_details', movie_id=movie_id))
+        return render_template('edit_review.html', movie_id=movie_id, user_id=user_id, review=review)
+    except ValueError as e:
+        error_message = str(e)
+        return render_template('general_error.html', error_message=error_message)
+
+    except RuntimeError as e:
+        error_message = "Error retrieving data from database"
+        print(f"Error: {str(e)}")
+        return render_template('general_error.html', error_message=error_message)
+
+
+@app.route('/delete_review/<user_id>/<movie_id>/<review_id>', methods=['POST'])
+@login_required
+def delete_review(user_id, movie_id, review_id):
+    """Allows the user to delete a review if published by him"""
+    if request.method == 'POST':
+        try:
+            data_manager.delete_reviews(user_id, movie_id, review_id)
+            return redirect(url_for('movie_details', movie_id=movie_id))
+        except ValueError as e:
+            error_message = str(e)
+            return render_template('general_error.html', error_message=error_message)
+
+        except RuntimeError as e:
+            error_message = "Error retrieving data from database"
+            print(f"Error: {str(e)}")
+            return render_template('general_error.html', error_message=error_message)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+# with app.app_context():
+#     db.create_all()
