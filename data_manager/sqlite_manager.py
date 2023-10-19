@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from .data_manager_interface import DataManagerInterface
-from .data_models import User, Movie
+from .data_models import Movie, User, Review
 from moviweb_app.id_password_handler import check_password_hash
 
 
@@ -231,3 +231,129 @@ class SQLiteDataManager(DataManagerInterface):
             # Handle exceptions (e.g., database connection errors) here
             print(f"Error while checking if a movie exists: {str(e)}")
             return False  # Error occurred, consider the movie doesn't exist
+
+    def add_reviews(self, review_id, user_id, movie_id, rating, likes, publication_date,
+                    review_text, review_title,):  # CHECKED
+        """Allows the user to publish a review for a certain movie with the given ID"""
+        # Check if the movie exists
+        try:
+            db = self.db
+            if not self.check_movie_id_exist(movie_id):
+                raise ValueError(f"Movie with not found")
+
+            # Check if the user exists
+            user = self.get_user_name(user_id)
+            if not user:
+                raise ValueError(f"User with ID {user_id} not found")
+            new_review = Review(
+                review_id=review_id,
+                user_id=user_id,
+                movie_id=movie_id,
+                rating=rating,
+                likes=likes,
+                publication_date=publication_date,
+                review_text=review_text,
+                review_title=review_title
+            )
+            db.session.add(new_review)
+            db.session.commit()
+            return True
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while adding a review: {str(e)}")
+            return None  # Error occurred, review not added
+
+    def edit_reviews(self, review_id, user_id, movie_id, rating, review_text, review_title):  # CHECKED
+        """Allows a user to edit his movie review"""
+        # Check if the movie exists
+        try:
+            db = self.db
+            if not self.check_movie_id_exist(movie_id):
+                raise ValueError(f"Movie with not found")
+
+            # Check if the user exists
+            user = self.get_user_name(user_id)
+            if not user:
+                raise ValueError(f"User with ID {user_id} not found")
+            existing_review = db.session.query(Review).filter_by(review_id=review_id).first()
+            if existing_review:
+                existing_review.rating = rating
+                existing_review.review_text = review_text
+                existing_review.review_title = review_title
+                db.session.commit()
+                return True
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while editing a review: {str(e)}")
+            return None  # Error occurred, movie review not edited
+
+    def delete_reviews(self, user_id, movie_id, review_id):  # CHECKED
+        """deletes a review"""
+        # Check if the movie exists
+        try:
+            db = self.db
+            if not self.check_movie_id_exist(movie_id):
+                raise ValueError(f"Movie with not found")
+
+            # Check if the user exists
+            user = self.get_user_name(user_id)
+            if not user:
+                raise ValueError(f"User with ID {user_id} not found")
+
+            # Check if the review exists
+            existing_review = db.session.query(Review).filter(
+                review_id == review_id).first()
+            if not existing_review:
+                raise ValueError(f"Review not found with ID {review_id}")
+
+            # Delete the review
+            db.session.delete(existing_review)
+            db.session.commit()
+            return True
+
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while deleting a movie: {str(e)}")
+            return None  # Error occurred, movie not deleted
+
+    def get_movie_details(self, movie_id):
+        """Retrieves a movie by its ID from the database."""
+        try:
+            db = self.db
+            movie = db.session.query(Movie).filter(Movie.movie_id == movie_id).first()
+            if movie:
+                return movie
+            else:
+                raise ValueError(f"Movie not found")
+
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while fetching movie details: {str(e)}")
+            return None  # Error occurred
+
+    def get_review_info(self, review_id):
+        """Retrieves a review by its ID from the database."""
+        try:
+            db = self.db
+            review = db.session.query(Review).filter(Review.review_id == review_id).first()
+            if review:
+                return review
+            else:
+                raise ValueError(f"Review not found")
+
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while fetching review details: {str(e)}")
+            return None  # Error occurred
+
+    def get_all_movie_reviews(self, movie_id):  # CHECKED
+        """retrieves all the movie info and reviews for a movie with the provided ID"""
+        try:
+            db = self.db
+            reviews = db.session.query(Review).filter(Review.movie_id == movie_id).all()
+            return reviews
+
+        except Exception as e:
+            # Handle exceptions (e.g., database connection errors) here
+            print(f"Error while fetching movie reviews: {str(e)}")
+            return []  # Return an empty list if an error occurred
