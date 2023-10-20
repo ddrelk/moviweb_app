@@ -34,3 +34,90 @@
     margin: 10px;
     padding: 10px;
 }
+
+
+
+.image-section {
+    margin: 10px;
+    width: 40%;
+    float: left; /* Float the image to the left */
+}
+
+.image-section img {
+    width: 100%;
+    height: auto; /* This ensures the image maintains its aspect ratio */
+    max-height: 450px; /* Set the maximum height as desired */
+    display: block;
+}
+
+.movie-details {
+    float: right; /* Float the review section to the right */
+    width: 50%;
+    margin: 10px;
+    font-size: 30pt;
+}
+
+p {
+    font-size: 30pt;
+}
+
+ul {
+    list-style-type: none;
+    }
+
+.review-section {
+    padding: 10px;
+    width: 60%; /* Center the details section */
+    clear: both; /* Clear the floats */
+}
+
+.review-section {
+        clear: both; /* Clear the float to prevent layout issues */
+    }
+
+.review{
+    font-size: 18px;
+    }
+
+.edit-delete-container{
+    display: flex;
+    width: 0px; /* Adjust the width to match the button's width */
+    height: 35px; /* Adjust the height to match the button's height */
+    margin-top: 30px; /* Increased top margin */
+    margin-bottom: 60px;
+}
+
+.edit-button{
+    margin-right: 10px; /* Adjust the value to add space between buttons */
+    background-color: #880044;
+    opacity: 0.9; /* Slightly increased opacity */
+    color: #00CC99;
+    padding: 4px 10px; /* Slightly larger padding */
+    border: 1px solid #474747; /* Add a subtle border */
+    border-radius: 3px;
+    font-size: 18px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth color transition */
+}
+
+.delete-button{
+    background-color: #880044;
+    opacity: 0.9; /* Slightly increased opacity */
+    color: #00CC99;
+    padding: 4px 10px; /* Slightly larger padding */
+    border: 1px solid #474747; /* Add a subtle border */
+    border-radius: 3px;
+    font-size: 18px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth color transition */
+}
+
+.edit-button button:hover {
+  background-color: #DD1155; /* Darker background on hover */
+}
+
+.delete-button button:hover {
+  background-color: #DD1155; /* Darker background on hover */
+}

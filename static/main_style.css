@@ -26,6 +26,11 @@ body {
   margin-bottom: 15px; /* Increased margin */
 }
 
+h1 {
+    text-align: center; /* Center the text horizontally */
+    font-weight: bold; /* Make the text bold */
+    }
+
 /* Style buttons container */
 .buttons-container {
   display: flex;
@@ -54,10 +59,6 @@ body {
   background-color: #DD1155; /* Darker background on hover */
 }
 
-/* Improve button hover effect */
-.buttons-container button:hover {
-  background-color: #DD1155; /* Darker background on hover */
-}
 
 /* Style bottom-right button */
 .bottom-right-button {
