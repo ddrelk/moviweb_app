@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <link rel="stylesheet" href="/static/main_style.css">
+</head>
+<body>
+
+<div>
+    <h1 class="title">MOVIE RECOMMENDATION</h1>
+</div>
+    <p>{{ movie_prompt }}</p>
+<div>
+
+</div>
+
+<div class="buttons-container">
+   <a href="{{ url_for('list_user_movies', user_id=user_id) }}">
+        <button class="top-right-button">Back to Movies</button>
+    </a>
+</div>
+</body>
+</html>

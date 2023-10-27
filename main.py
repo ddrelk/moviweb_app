@@ -1,22 +1,38 @@
-from api_extractor import get_imdb_link, data_extractor
-from data_manager.sqlite_manager import SQLiteDataManager
-from flask_login import LoginManager, login_user, logout_user, login_required
-from flask import Flask, render_template, request, url_for, redirect, session, flash
-from moviweb_app.login_handler import User
-from moviweb_app.id_password_handler import generate_password_hash, id_generator, save_date
-from moviweb_app.id_password_handler import check_password_hash
 import os
+
+from dotenv import load_dotenv
+from data_manager.sqlite_manager import SQLiteDataManager
+from flask_login import LoginManager, login_required, login_user, logout_user
+from flask import Flask, render_template, url_for, redirect, request, flash, session
+from moviweb_app.extended.login_handler import User
+from moviweb_app.extended.api_extractor import data_extractor, get_imdb_link
+from moviweb_app.extended.id_password_handler import generate_password_hash, id_generator, save_date, \
+    check_password_hash
+from moviweb_app.extended.chat_gpt_interface import chat_interface, ai_prompt, ai_welcome, random_prompt
 
 
 app = Flask(__name__)
-db_dir = os.path.join(app.root_path, 'data')
-os.makedirs(db_dir, exist_ok=True)
-db_file_path = os.path.join(db_dir, 'movies.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file_path}'
+load_dotenv()
+
+file_path = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{file_path}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = os.getenv('SECRET_KEY')
 data_manager = SQLiteDataManager(app)
-app.secret_key = '0ac93239bf1b653ee7a5392e84e3b703'
+# app.register_blueprint(api)
+
 login_manager = LoginManager(app)
 # db.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    user_data = data_manager.get_user_data()
+    user = next((user for user in user_data if user['id'] == user_id), None)
+    if user:
+        return User(user)
+    else:
+        return None
 
 
 @app.route('/')
@@ -82,11 +98,22 @@ def add_user():
 
         try:
             hashed_password = generate_password_hash(user_password)
-            if data_manager.add_user(user_name, hashed_password, user_id, email):
-                session['user_id'] = user_id
-                session['username'] = user_name
-                session['email'] = email
-                return redirect(url_for('login', username=user_name))
+            is_new_user = data_manager.add_user(user_name, hashed_password, user_id, email)
+            user_data = data_manager.get_user_data()
+
+            session['user_id'] = user_id
+            session['username'] = user_name
+            session['password'] = user_password
+            for user in user_data:
+                if user['name'] == user_name and check_password_hash(user['password'], user_password):
+                    user_id = user['id']
+                    user_obj = load_user(user_id)  # Create a User object
+                    login_user(user_obj)  # Log the user in
+
+            if is_new_user:
+                flash(chat_interface(ai_welcome(user_name)))
+            # Redirect to the 'list_user_movies' route with is_new_user flag
+            return redirect(url_for('list_user_movies', user_id=user_id, is_new_user=is_new_user))
 
         except ValueError as e:
             return render_template('add_user.html', error_message=str(e))
@@ -200,7 +227,7 @@ def delete_movie(user_id, movie_id):
     if request.method == 'POST':
         try:
             data_manager.delete_movie(user_id, movie_id)
-            return redirect(url_for('list_user_movies', user_id=user_id, movie_id=movie_id))
+            return redirect(url_for('list_user_movies', user_id=user_id))
 
         except (ValueError, TypeError):
             # Handle possible errors with the movie id
@@ -226,7 +253,10 @@ def login():
                     user_id = user['id']
                     user_obj = load_user(user_id)  # Create a User object
                     login_user(user_obj)  # Log the user in
-                    return redirect(url_for('list_user_movies', user_id=user_id))
+
+                    # Check if the user is new (just registered) and set is_new_user to True
+                    is_new_user = user.get('is_new_user', False)
+                    return redirect(url_for('list_user_movies', user_id=user_id, is_new_user=is_new_user))
             else:
                 error_message = "Invalid credentials. Please try again."
                 return render_template('login.html', error_message=error_message)
@@ -282,14 +312,6 @@ def logout():
     logout_user()
     session.clear()
     return redirect(url_for('login'))
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    users = data_manager.get_user_data()
-    for user in users:
-        user_id = user['id']
-        return render_template('404.html', user_id=user_id), 404
 
 
 @app.route('/movie_details/<movie_id>')
@@ -379,9 +401,37 @@ def delete_review(user_id, movie_id, review_id):
             return render_template('general_error.html', error_message=error_message)
 
 
+@app.route('/users/<user_id>/movie_prompt')
+@login_required
+def ai_suggest_movie(user_id):
+    user_name = data_manager.get_user_name(user_id)
+    movies = data_manager.get_user_movies(user_id)
+    user_movies = []
+    for movie in movies:
+        user_movies.append(movie.title)
+    chatgpt_prompt = chat_interface(ai_prompt(user_name, user_movies))
+
+    return render_template('chatgpt_movie.html', user_id=user_id, movie_prompt=chatgpt_prompt)
+
+
+@app.route('/users/<user_id>/random_movie')
+@login_required
+def ai_random_movie(user_id):
+    user_name = data_manager.get_user_name(user_id)
+    chatgpt_random_movie = chat_interface(random_prompt(user_name))
+    return render_template('chatgpt_random_movie.html', user_id=user_id, movie_prompt=chatgpt_random_movie)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    users = data_manager.get_user_data()
+    for user in users:
+        user_id = user['id']
+        return render_template('404.html', user_id=user_id), 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
 
 # with app.app_context():
 #     db.create_all()

@@ -1,9 +1,13 @@
+import os
+from dotenv import load_dotenv
 import json
 import requests
 from colorama import Fore, init
 init()
+load_dotenv()
 
-API_KEY = "13043d11"
+
+API_KEY = os.getenv('MOVIE_API_KEY')
 URL = f'http://www.omdbapi.com/?i=tt3896198&apikey={API_KEY}'
 
 
