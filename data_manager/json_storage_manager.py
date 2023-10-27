@@ -1,6 +1,6 @@
 from .data_manager_interface import DataManagerInterface
 from .file_handler import load_from_file, save_file
-from moviweb_app.id_password_handler import check_password_hash
+from moviweb_app.extended.id_password_handler import check_password_hash
 
 
 class JSONDataManager(DataManagerInterface):

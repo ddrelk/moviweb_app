@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from .data_manager_interface import DataManagerInterface
 from .data_models import Movie, User, Review
-from moviweb_app.id_password_handler import check_password_hash
+from moviweb_app.extended.id_password_handler import check_password_hash
 
 
 class SQLiteDataManager(DataManagerInterface):
