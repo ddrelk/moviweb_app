@@ -90,4 +90,25 @@ ol {
     font-weight: bold;
 }
 
+/* Flash message container */
+.flash-message {
+  background-color: #DD1155; /* Blue background color */
+  color: #ffffff; /* White text color */
+  padding: 10px; /* Padding around the message */
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center-align text */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  margin-bottom: 20px; /* Create some spacing from content below */
+}
 
+/* Flash message link styles */
+.flash-message a {
+  color: #ffeb3b; /* Yellow link color */
+  text-decoration: none; /* Remove underlines from links */
+  font-weight: bold; /* Make links bold */
+}
+
+/* Flash message hover effect */
+.flash-message a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}

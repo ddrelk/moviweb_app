@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='add_user_style.css') }}">
 </head>
 <body>
@@ -24,6 +25,11 @@
         <br>{{ error_message }}
     </div>
 </div>
+<div class="button-container">
+    <a href="{{ url_for('home') }}">
+        <button class="bottom-right-button">Back to Homepage</button>
+    </a>
 
+    </div>
 </body>
 </html>

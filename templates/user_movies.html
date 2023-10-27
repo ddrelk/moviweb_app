@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="/static/main_style.css">
 </head>
 <body>
+    <div>
+    {% with message = get_flashed_messages() %}
+        <div class="flash-message">
+            {{ message[0] }}
+        </div>
+    {% endwith %}
+        </div>
     <div class="movie-list">
         <ol class="movie-grid">
             {% for movie in movies %}
@@ -40,6 +47,12 @@
     <div class="buttons-container">
         <a href="{{ url_for('add_movie', user_id=user_id) }}">
             <button>Add Movie</button>
+        </a>
+        <a href="{{ url_for('ai_random_movie', user_id=user_id) }}">
+            <button>Random Movie</button>
+        </a>
+        <a href="{{ url_for('ai_suggest_movie', user_id=user_id) }}">
+            <button>Recommendations</button>
         </a>
         <a href="{{ url_for('manage_account', user_id=user_id) }}">
             <button>Manage Account</button>
