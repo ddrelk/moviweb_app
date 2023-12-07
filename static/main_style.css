@@ -8,10 +8,12 @@
 body {
   background: #DD1155; /* Dark background color */
   color: #ffffff; /* White text color */
-  font-family: "Lucida Console", "Courier New", monospace;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
   position: relative;
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
+  width: 100;
 }
 
 /* Style the title */
@@ -96,4 +98,10 @@ p {
 .image {
     width: 1280px;   /* Adjust width as needed */
     height: 200px;  /* Adjust height as needed */
+}
+
+@media (max-width: 600px) {
+    .hidden-on-mobile {
+        display: none;
+    }
 }
