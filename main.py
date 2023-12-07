@@ -40,16 +40,6 @@ def home():
     return render_template('homepage.html')
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    user_data = data_manager.get_user_data()
-    user = next((user for user in user_data if user['id'] == user_id), None)
-    if user:
-        return User(user)
-    else:
-        return None
-
-
 @app.route('/users')
 def list_users():
     try:
@@ -227,6 +217,7 @@ def delete_movie(user_id, movie_id):
     if request.method == 'POST':
         try:
             data_manager.delete_movie(user_id, movie_id)
+            print("Movie main deleted successfully")  # Add this line
             return redirect(url_for('list_user_movies', user_id=user_id))
 
         except (ValueError, TypeError):

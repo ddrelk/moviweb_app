@@ -120,17 +120,16 @@ class SQLiteDataManager(DataManagerInterface):
     def delete_movie(self, user_id, movie_id):
         try:
             db = self.db
-
             # Query the existing movie by user_id and movie_id
-            existing_movie = db.session.query(Movie).filter(
-                user_id == user_id, movie_id == movie_id).first()
+            existing_movie = db.session.query(Movie).filter_by(
+                user_id=user_id, id=movie_id).first()
 
             if existing_movie:
                 # Delete the movie from the database
                 db.session.delete(existing_movie)
                 db.session.commit()
-
                 return True  # Movie successfully deleted
+
             else:
                 return False  # Movie with the specified user_id and movie_id not found
         except Exception as e:
@@ -220,7 +219,6 @@ class SQLiteDataManager(DataManagerInterface):
     def check_movie_id_exist(self, movie_id):
         try:
             db = self.db
-
             # Query the database to check if a movie with the given movie_id exists
             existing_movie = db.session.query(Movie).filter_by(movie_id=movie_id).first()
 
@@ -305,7 +303,6 @@ class SQLiteDataManager(DataManagerInterface):
                 review_id == review_id).first()
             if not existing_review:
                 raise ValueError(f"Review not found with ID {review_id}")
-
             # Delete the review
             db.session.delete(existing_review)
             db.session.commit()
